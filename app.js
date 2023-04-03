@@ -20,4 +20,10 @@ app.use(express.static(`${__dirname}/public`));
 const loanRouter = require('./routes/loansRoute');
 app.use('/loan', loanRouter);
 
+const customerRouter = require('./routes/customerRoute');
+app.use('/customers', customerRouter);
+
+const ledgerRouter = require('./routes/loanLedgerRoute');
+app.use('/ledger', ledgerRouter);
+
 module.exports = app;

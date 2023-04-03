@@ -1,16 +1,15 @@
-const Loans = require('../models/loanModel');
 const Customer = require('../models/customerModel');
 
-exports.getAllLoans = async (req, res) => {
+exports.getAllCustomers = async (req, res) => {
     try {
 
-        const loans = await Loans.find({});
+        const customers = await Customer.find({});
 
         res.status(200).json({
             status: 'success',
-            results: loans.length,
+            results: customers.length,
             data: {
-                loans
+                customers
             }
         });
 
@@ -22,19 +21,16 @@ exports.getAllLoans = async (req, res) => {
     }
 }
 
-exports.createLoan = async (req, res, next) => {
+exports.createCustomer = async (req, res) => {
     try {
 
-        const newLoan = await Loans.create(req.body);
-        newLoan;
-        //const newCustomer = await Customer.create()
-        console.log(req.body.customer[0])
+        const newCustomer = await Customer.create(req.body);
 
         res.status(200).json({
 
             status: '200',
             data: {
-                newLoan
+                newCustomer
             }
         });
 
@@ -44,28 +40,19 @@ exports.createLoan = async (req, res, next) => {
             message: err.message
         });
     }
-
-    next();
-}
-
-exports.creatUserwLoan = async (req, res, next) => {
-    const newCustomer = await Customer.create(req.body.customer[0]);
-    newCustomer;
-    res.end();
-
 }
 
 
-exports.getLoanById = async (req, res) => {
+exports.getCustomerById = async (req, res) => {
 
     try {
 
-        const loan = await Loans.findById(req.params.id);
+        const customer = await Customer.findById(req.params.id);
 
         res.status(200).json({
             status: 'success',
             info: {
-                loan
+                customer
             }
         })
 
@@ -78,14 +65,14 @@ exports.getLoanById = async (req, res) => {
     }
 }
 
-exports.updateLoanById = async (req, res) => {
+exports.updateCustomerById = async (req, res) => {
 
     try {
 
-        const updateData = await Loans.findOneAndUpdate(req.params.id, req.body);
+        const updateData = await Customer.findOneAndUpdate(req.params.id, req.body);
         updateData;
         
-        const updatedData = await Loans.findById(req.params.id);
+        const updatedData = await Customer.findById(req.params.id);
 
 
         res.status(200).json({
@@ -109,10 +96,10 @@ exports.updateLoanById = async (req, res) => {
 
 }
 
-exports.deleteLoanById = async (req, res) => {
+exports.deleteCustomerById = async (req, res) => {
 
     try {
-        const deleteData = await Loans.findByIdAndDelete(req.params.id);
+        const deleteData = await Customer.findByIdAndDelete(req.params.id);
         deleteData;
 
         res.status(200).json({

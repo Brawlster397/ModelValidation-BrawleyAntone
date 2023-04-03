@@ -1,30 +1,9 @@
 const mongoose = require('mongoose');
+const {customerSchema} = require('./customerModel');
+
 
 const loanSchema = new mongoose.Schema({
-    loanHolderFName: {
-        type: String,
-        minLength: [1, `Please make sure that the number of characters is greater than {MINLENGTH}`],
-        maxLength: [25, `Please make sure that the number of characters does not exceed {MAXLENGTH}`],
-        required: true
-    },
-
-    loanHolderLName: {
-        type: String,
-        minLength: [1, `Please make sure that the number of characters is greater than {MINLENGTH}`],
-        maxLength: [25, `Please make sure that the number of characters does not exceed {MAXLENGTH}`],
-        required: true
-    },
-
-    loanHolderDob: {
-        type: Date,
-        required: true,
-        //Insert validator here to validate date of birth
-        validate: {
-            validator: (value) => value <= Date.now(),
-            message: 'Date of birth must be in the past'
-        }
-    },
-
+    
     loanType: {
         type: String,
         required: true,
@@ -73,11 +52,14 @@ const loanSchema = new mongoose.Schema({
         type: Date, 
         immutable: true,
         default: () => Date.now()
-    }
+    }, 
+
+    //declare the relationship between a loan and a customer.
+    customer: [customerSchema]
 
 }); 
 
-const Loan = mongoose.model('loan', loanSchema);
+const Loan = mongoose.model('Loan', loanSchema);
 
 module.exports = Loan;
 
